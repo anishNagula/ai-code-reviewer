@@ -2,7 +2,7 @@ from model import generate
 
 def summariser_agent(code):
 
-    # 🔹 File handling
+    # File handling
     if "open(" in code:
         return """Purpose:
 Reads data from a file and processes it.
@@ -15,7 +15,7 @@ Steps:
 
 Time Complexity: O(n)"""
 
-    # 🔹 List transformation with condition
+    # List transformation with condition
     if "for" in code and "if" in code:
         return """Purpose:
 Processes a list and applies conditional transformations.
@@ -28,7 +28,7 @@ Steps:
 
 Time Complexity: O(n)"""
 
-    # 🔹 List building
+    # List building
     if "append(" in code:
         return """Purpose:
 Creates a new list by applying an operation to each element.
@@ -41,7 +41,7 @@ Steps:
 
 Time Complexity: O(n)"""
 
-    # 🔹 Aggregation (sum-like)
+    # Aggregation (sum-like)
     if "total" in code:
         return """Purpose:
 Computes a cumulative result from a list.
@@ -53,7 +53,7 @@ Steps:
 
 Time Complexity: O(n)"""
 
-    # 🔹 Default
+    # Default
     return """Purpose:
 Processes input data and returns a result.
 
@@ -65,7 +65,7 @@ Time Complexity: O(n)"""
 
 
 # =========================
-# ⚠️ REVIEWER (RULE-BASED ONLY)
+# REVIEWER (RULE-BASED ONLY)
 # =========================
 def reviewer_agent(code):
 
@@ -94,42 +94,42 @@ def reviewer_agent(code):
 
 
 # =========================
-# 🚀 IMPROVER (HYBRID)
+# IMPROVER (HYBRID)
 # =========================
 def improvement_agent(code, review):
 
-    # 🔥 RULE SHORTCUTS (important for demo correctness)
+    # RULE SHORTCUTS (important for demo correctness)
 
-    # 1️⃣ Already optimal
+    # 1Already optimal
     if "return x * x" in code:
         return code
 
-    # 🔥 FILTER + TRANSFORM + SUM (COMPOSITE CASE)
+    # FILTER + TRANSFORM + SUM (COMPOSITE CASE)
     if "append(" in code and "if" in code and "total" in code:
         return """def process(nums):
     return sum(x*2 for x in nums if x > 10)"""
 
-    # 2️⃣ sum pattern
+    # sum pattern
     if "total" in code and "range(len" in code:
         return """def sum_list(nums):
     return sum(nums)"""
 
-    # 3️⃣ list doubling
+    # list doubling
     if "append(" in code and "* 2" in code and "if" not in code:
         return """def double(nums):
     return [x*2 for x in nums]"""
 
-    # 4️⃣ conditional transformation
+    # conditional transformation
     if "append(" in code and "if" in code:
         return """def process_numbers(nums):
     return [x*2 if x % 2 == 0 else x*3 for x in nums]"""
 
-    # 5️⃣ file handling
+    # file handling
     if "open(" in code and "read(" in code:
         return """with open(file_path) as f:
     data = f.read()"""
 
-    # 🔥 LLM fallback (only if needed)
+    # LLM fallback (only if needed)
     prompt = f"""
 Improve this Python code.
 

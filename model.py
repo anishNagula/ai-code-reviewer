@@ -21,7 +21,7 @@ def generate(prompt):
     outputs = model.generate(
         **inputs,
         max_length=256,
-        temperature=0.3,   # 🔥 lower = more stable
+        temperature=0.3,
         do_sample=True
     )
 

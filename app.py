@@ -6,7 +6,7 @@ from agents import summariser_agent, reviewer_agent, improvement_agent
 
 st.set_page_config(page_title="AI Code Reviewer", layout="wide")
 
-# 🔥 Styling
+# Styling
 st.markdown("""
 <style>
 .block-container {
